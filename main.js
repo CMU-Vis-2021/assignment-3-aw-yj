@@ -21,7 +21,7 @@ vegaEmbed("#vega-div", {
   },
   mark: "bar",
   encoding: {
-    x: { field: "a", type: "nominal", axis: { labelAngle: 0 } },
-    y: { field: "b", type: "quantitative" },
+    x: { field: "Date", type: "nominal", axis: { labelAngle: 0 } },
+    y: { field: "Price", type: "quantitative" },
   },
 });

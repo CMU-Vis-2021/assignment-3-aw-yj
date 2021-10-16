@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script src="https://d3js.org/d3.v4.js"></script>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Assignment 4</title>
@@ -9,8 +10,12 @@
   </head>
   <body>
     <h2>Assignment 4</h2>
-    <div id="d3-div"></div>
-    <div id="vega-div"></div>
-    <script type="module" src="./main.js"></script>
+    <!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+    <!-- Initialize a select button -->
+    <select id="selectButton"></select>
+    <!-- Create a div where the graph will take place -->
+    <div id="my_dataviz"></div>
+
+    <script src="main.js"></script>
   </body>
 </html>

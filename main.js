@@ -1,5 +1,5 @@
-import * as d3 from "d3";
-import vegaEmbed from "vega-embed";
+//import * as d3 from "d3";
+//import vegaEmbed from "vega-embed";
 
 //d3.select("#d3-div").append("p").text("hello from D3");
 

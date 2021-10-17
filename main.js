@@ -1,8 +1,7 @@
 import * as d3 from "d3";
 import vegaEmbed from "vega-embed";
 
-d3.select("#d3-div").append("p").text("hello from D3");
-
+//d3.select("#d3-div").append("p").text("hello from D3");
 
 // set the dimensions and margins of the graph
 var margin = {top: 30, right: 30, bottom: 30, left: 50},

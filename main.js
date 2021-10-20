@@ -13,25 +13,37 @@ var svg = d3.select("#my_dataviz")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
+const tParser = d3.timeParse("%m/%d/%Y");
 // get the data
-d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/iris.csv", function(data) {
+d3.csv("tesla.csv", function(data) {
 
+  // Group data by date. Note that we won't be able to query a date not in the csv.
+  dataByDate = d3.group(data, d=>d.Date);
   // List of groups (here I have one group per column)
-  var allGroup = d3.map(data, function(d){return(d.Species)}).keys()
+  var allGroup = {
+    "Open": function(date){ return +dataByDate.get(date)[0].Open;}, 
+    "High": function(date){ return +dataByDate.get(date)[0].High;}, 
+    "Low": function(date){ return +dataByDate.get(date)[0].Low;}, 
+    "Close": function(date){ return +dataByDate.get(date)[0].Close;}};
+
+  console.log(allGroup);
 
   // add the options to the button
   d3.select("#selectButton")
     .selectAll('myOptions')
-    .data(allGroup)
+    .data(d3.keys(allGroup))
     .enter()
     .append('option')
     .text(function (d) { return d; }) // text showed in the menu
     .attr("value", function (d) { return d; }) // corresponding value returned by the button
 
+    console.log(typeof d3.min(data, function(d) { return d.Open; }));
+    console.log( tParser(d3.min(data, function(d) { return d.Date; })));
   // add the x Axis
-  var x = d3.scaleLinear()
-    .domain([0, 12])
+  var x = d3.scaleUtc()
+    .domain([d3.min(data, function(d) { return tParser(d.Date); }), d3.max(data, function(d) { return tParser(d.Date); })])
     .range([0, width]);
+    
   svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
@@ -39,16 +51,14 @@ d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/ir
   // add the y Axis
   var y = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, 0.4]);
+            .domain([d3.min(data, function(d) { return Number(d.Low); }), d3.max(data, function(d) { return Number(d.High); })]);
   svg.append("g")
       .call(d3.axisLeft(y));
 
   // Compute kernel density estimation for the first group called Setosa
-  var kde = kernelDensityEstimator(kernelEpanechnikov(3), x.ticks(140))
-  var density =  kde( data
-    .filter(function(d){ return d.Species == "setosa"})
-    .map(function(d){  return +d.Sepal_Length; })
-  )
+  // var kde = kernelDensityEstimator(kernelEpanechnikov(3), x.ticks(140))
+  // var density =  kde( allGroup["Open"]);
+  var density =  dateLookup(data.map(function(d){return d.Date;}), tParser, allGroup, "Open");
 
   // Plot the area
   var curve = svg
@@ -70,11 +80,7 @@ d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/ir
   // A function that update the chart when slider is moved?
   function updateChart(selectedGroup) {
     // recompute density estimation
-    kde = kernelDensityEstimator(kernelEpanechnikov(3), x.ticks(40))
-    var density =  kde( data
-      .filter(function(d){ return d.Species == selectedGroup})
-      .map(function(d){  return +d.Sepal_Length; })
-    )
+    var density =  dateLookup(data.map(function(d){return d.Date;}), tParser, allGroup, selectedGroup);
 
     // update the chart
     curve
@@ -97,13 +103,12 @@ d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/ir
 });
 
 // Function to compute density
-function kernelDensityEstimator(kernel, X) {
-  return function(V) {
-    return X.map(function(x) {
-      return [x, d3.mean(V, function(v) { return kernel(x - v); })];
+function dateLookup(Dates, tParser, allGroup, selectedGroup) {
+  return Dates.map(function(date) {
+      return [tParser(date), allGroup[selectedGroup](date)];
     });
-  };
 }
+
 function kernelEpanechnikov(k) {
   return function(v) {
     return Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;

@@ -55,21 +55,21 @@ d3.csv("https://raw.githubusercontent.com/CMU-Vis-2021/assignment-3-aw-yj/main/d
   )
 
   // Plot the area
-  var curve = svg
-    .append('g')
-    .append("path")
-      .attr("class", "mypath")
-      .datum(density)
-      .attr("fill", "#69b3a2")
-      .attr("opacity", ".8")
-      .attr("stroke", "#000")
-      .attr("stroke-width", 1)
-      .attr("stroke-linejoin", "round")
-      .attr("d",  d3.line()
-        .curve(d3.curveBasis)
-          .x(function(d) { return x(d[0]); })
-          .y(function(d) { return y(d[1]); })
-      );
+  //var curve = svg
+    //.append('g')
+    //.append("path")
+      //.attr("class", "mypath")
+      //.datum(density)
+      //.attr("fill", "#69b3a2")
+      //.attr("opacity", ".8")
+      //.attr("stroke", "#000")
+      //.attr("stroke-width", 1)
+      //.attr("stroke-linejoin", "round")
+      //.attr("d",  d3.line()
+        //.curve(d3.curveBasis)
+          //.x(function(d) { return x(d[0]); })
+          //.y(function(d) { return y(d[1]); })
+      //);
 
   // A function that update the chart when slider is moved?
   function updateChart(selectedGroup) {

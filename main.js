@@ -61,21 +61,21 @@ d3.csv("tesla.csv", function(data) {
   var density =  dateLookup(data.map(function(d){return d.Date;}), tParser, allGroup, "Open");
 
   // Plot the area
-  //var curve = svg
-    //.append('g')
-    //.append("path")
-      //.attr("class", "mypath")
-      //.datum(density)
-      //.attr("fill", "#69b3a2")
-      //.attr("opacity", ".8")
-      //.attr("stroke", "#000")
-      //.attr("stroke-width", 1)
-      //.attr("stroke-linejoin", "round")
-      //.attr("d",  d3.line()
-        //.curve(d3.curveBasis)
-          //.x(function(d) { return x(d[0]); })
-          //.y(function(d) { return y(d[1]); })
-      //);
+  var curve = svg
+    .append('g')
+    .append("path")
+      .attr("class", "mypath")
+      .datum(density)
+      .attr("fill", "#69b3a2")
+      .attr("opacity", "0")
+      .attr("stroke", "#000")
+      .attr("stroke-width", 1)
+      .attr("stroke-linejoin", "round")
+      .attr("d",  d3.line()
+        .curve(d3.curveBasis)
+          .x(function(d) { return x(d[0]); })
+          .y(function(d) { return y(d[1]); })
+      );
 
   // A function that update the chart when slider is moved?
   function updateChart(selectedGroup) {

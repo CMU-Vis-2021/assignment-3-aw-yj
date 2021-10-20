@@ -7,6 +7,6 @@ We thought a line chart would work best if we wanted to show a trend for stock p
 
 # Overview of your development process
 
-We both spent a day ( ~10 hours) coding from our end and 2 hours to meet and compile the online file. (in total, 12 hours per person)
+We both spent a whole day ( ~16 hours) coding from our end and 2 hours to meet and compile the online file. (in total, 15-16 hours per person)
 We spent some time trying to clone the Github file to the local document, and using VScode to push updates. We found the dataset from Koggle, and there's no missing value in the dataset. To make the chart interactive, we looked at different online tutorials and found  Graph Gallery to be really helpful. We followed the code instructions and modified the code based on our own needs.
 One challenge we encountered was to make the "main.js" work on the HTML file. We still do not know why, but when deleting "type=module" in the <scrip> code, the javascript codes were then able to be reflected in the HTML file. Another challenge we encountered was that we realized that we had to change the dataset format so that the js code can read the data by columns. We used a dictionary to accommodate elements into the file. We also used tParser to convert strings into date data.

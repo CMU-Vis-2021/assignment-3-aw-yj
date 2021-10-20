@@ -66,7 +66,7 @@ d3.csv("tesla.csv", function(data) {
     .append("path")
       .attr("class", "mypath")
       .datum(density)
-      .attr("fill", "#fffffa")
+      .attr("fill", "#ffffff")
       .attr("opacity", ".8")
       .attr("stroke", "#000")
       .attr("stroke-width", 1)
